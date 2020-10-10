@@ -9,7 +9,7 @@ import {
   UsePipes
 } from '@nestjs/common'
 import { AppService } from './app.service'
-import { JoiValidationPipe } from './core/interceptor/validation.interceptor'
+import { JoiValidationPipe } from './core/pipe/validation.pipe'
 import { delay } from './util/util'
 
 const testSchema = Joi.object({
