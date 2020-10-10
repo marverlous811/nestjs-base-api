@@ -14,7 +14,7 @@ async function bootstrap() {
     new FastifyAdapter(),
     { logger: false }
   )
-  await app.listen(API_PORT)
+  await app.listen(API_PORT, '0.0.0.0')
   logger.info('server is running in ', API_PORT)
 }
 bootstrap()
