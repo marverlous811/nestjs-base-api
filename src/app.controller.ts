@@ -1,7 +1,20 @@
-import { Controller, Get } from '@nestjs/common'
+import Joi from '@hapi/joi'
+import {
+  Body,
+  Controller,
+  Get,
+  ParseIntPipe,
+  Post,
+  Query,
+  UsePipes
+} from '@nestjs/common'
 import { AppService } from './app.service'
-import { API_TIMEOUT } from './config.tmp'
+import { JoiValidationPipe } from './core/interceptor/validation.interceptor'
 import { delay } from './util/util'
+
+const testSchema = Joi.object({
+  name: Joi.string()
+})
 
 @Controller()
 export class AppController {
@@ -13,8 +26,16 @@ export class AppController {
   }
 
   @Get('/timeout')
-  async getTimeoutRequest(): Promise<string> {
-    await delay(API_TIMEOUT + 1000)
+  async getTimeoutRequest(
+    @Query('time', ParseIntPipe) time: number
+  ): Promise<string> {
+    await delay(time + 1000)
     return 'timeout'
+  }
+
+  @Post('/hello')
+  @UsePipes(new JoiValidationPipe(testSchema))
+  postHello(@Body() data: any): string {
+    return 'hello ' + data.name
   }
 }
