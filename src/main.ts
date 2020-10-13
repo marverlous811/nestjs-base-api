@@ -15,7 +15,6 @@ async function bootstrap() {
     new FastifyAdapter(),
     { logger: false }
   )
-  app.useGlobalFilters(new CustomizeEceptionsFilter())
   await app.listen(API_PORT, '0.0.0.0')
   logger.info('server is running in ', API_PORT)
 }
