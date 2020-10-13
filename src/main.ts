@@ -6,6 +6,7 @@ import {
 } from '@nestjs/platform-fastify'
 import NewLogger from './lib/logger'
 import { API_PORT } from './config'
+import { CustomizeEceptionsFilter } from './core/filter/execption.filter'
 const logger = NewLogger('main')
 
 async function bootstrap() {
@@ -14,6 +15,7 @@ async function bootstrap() {
     new FastifyAdapter(),
     { logger: false }
   )
+  app.useGlobalFilters(new CustomizeEceptionsFilter())
   await app.listen(API_PORT, '0.0.0.0')
   logger.info('server is running in ', API_PORT)
 }

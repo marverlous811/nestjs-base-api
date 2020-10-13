@@ -2,6 +2,7 @@ import Joi from '@hapi/joi'
 import {
   Body,
   Controller,
+  ForbiddenException,
   Get,
   ParseIntPipe,
   Post,
@@ -31,6 +32,11 @@ export class AppController {
   ): Promise<string> {
     await delay(time + 1000)
     return 'timeout'
+  }
+
+  @Get('/error')
+  getError(): string {
+    throw new ForbiddenException('error test exception')
   }
 
   @Post('/hello')
