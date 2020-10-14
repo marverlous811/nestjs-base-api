@@ -4,7 +4,8 @@ import {
   ArgumentMetadata,
   BadRequestException
 } from '@nestjs/common'
-import { ObjectSchema } from '@hapi/joi'
+import { ObjectSchema } from 'joi'
+import { objectToCamel } from '../../lib/object_covert'
 
 @Injectable()
 export class JoiValidationPipe implements PipeTransform {
@@ -15,6 +16,6 @@ export class JoiValidationPipe implements PipeTransform {
     if (error) {
       throw new BadRequestException(error.details)
     }
-    return value
+    return objectToCamel(value)
   }
 }

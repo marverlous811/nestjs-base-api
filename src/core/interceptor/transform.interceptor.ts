@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { objectToUnderscore } from '../../lib/object_covert'
 
 @Injectable()
 export class TransfromIntercept implements NestInterceptor {
@@ -13,7 +14,7 @@ export class TransfromIntercept implements NestInterceptor {
     return next.handle().pipe(
       map(data => ({
         status: true,
-        data: data
+        data: objectToUnderscore(data)
       }))
     )
   }
